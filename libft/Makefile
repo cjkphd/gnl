@@ -6,7 +6,7 @@
 #    By: mamateo <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 17:20:41 by mamateo           #+#    #+#              #
-#    Updated: 2018/12/07 17:20:47 by mamateo          ###   ########.fr        #
+#    Updated: 2018/12/17 19:39:38 by mamateo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,14 +131,14 @@ OBJECTS = ft_atoi.o\
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) $(CFILES) -I $(HEADER)
-	ar rc $(NAME) $(OBJECTS)
-	ranlib $(NAME)
+	@$(CC) $(CFLAGS) $(CFILES) -I $(HEADER)
+	@ar rc $(NAME) $(OBJECTS)
+	@ranlib $(NAME)
 
 clean:
-	/bin/rm -f $(OBJECTS)
+	@/bin/rm -f $(OBJECTS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all

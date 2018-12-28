@@ -6,15 +6,20 @@
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 18:46:41 by mamateo           #+#    #+#             */
-/*   Updated: 2018/12/18 16:11:11 by mamateo          ###   ########.fr       */
+/*   Updated: 2018/12/27 16:57:09 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static t_list	*get_file(t_list **file, int fd)
+/*
+** invokes the file from t_list struct,
+** giving a size and creates a file description placement.
+*/
+
+static t_list		*get_file(t_list **file, int fd)
 {
-	t_list		*tmp;
+	t_list			*tmp;
 
 	tmp = *file;
 	while (tmp)
@@ -29,7 +34,36 @@ static t_list	*get_file(t_list **file, int fd)
 	return (tmp);
 }
 
-int	get_next_line(const int fd, char **line)
+/*
+** heart of the file, depending on the main, invokes **line,
+** checks file for content,
+** and returns a number -1, 0, or 1 for false, null, or true
+*/
+
+int					get_next_line(const int fd, char **line)
 {
-	return (0);
+	char			buf[BUFF_SIZE + 1];
+	static t_list	*file;
+	int				i;
+	int				ret;
+	t_list			*cur;
+
+	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0))
+		return (-1);
+	cur = get_file(&file, fd);
+	Checker((*line = ft_strnew(1)));
+	while ((ret = read(fd, buf, BUFF_SIZE)))
+	{
+		buf[ret] = '\0';
+		Checker((cur->content = ft_strjoin(cur->content, buf)));
+		if (ft_strchr(buf, '\n'))
+			break ;
+	}
+	if (ret < BUFF_SIZE && !ft_strlen(cur->content))
+		return (0);
+	i = ft_cpytill(line, cur->content, '\n');
+	(i < (int)ft_strlen(cur->content))
+		? cur->content += (i + 1)
+		: ft_strclr(cur->content);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 22:09:05 by mamateo           #+#    #+#             */
-/*   Updated: 2018/11/26 00:05:16 by mamateo          ###   ########.fr       */
+/*   Updated: 2018/12/30 13:11:39 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char		*ft_strnew(size_t size)
 }
 
 /*
-** ft_memalloc -- allocates and returns a “fresh” memory area.
-** The memory allocated is initialized to 0.
+** ft_newstr -- allocates and returns a "fresh" memory area ending with '\0'
+** Each "character" of the string is set to the value of '\0'
 ** If the allocation fails, the function returns NULL.
 */

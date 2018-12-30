@@ -6,7 +6,7 @@
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 18:46:41 by mamateo           #+#    #+#             */
-/*   Updated: 2018/12/28 12:16:14 by mamateo          ###   ########.fr       */
+/*   Updated: 2018/12/30 13:46:47 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int					get_next_line(const int fd, char **line)
 	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0))
 		return (-1);
 	cur = get_file(&file, fd);
-	Checker((*line = ft_strnew(1)));
+	CHECK((*line = ft_strnew(1)));
 	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
-		Checker((cur->content = ft_strjoin(cur->content, buf)));
+		CHECK((cur->content = ft_strjoin(cur->content, buf)));
 		if (ft_strchr(buf, '\n'))
 			break ;
 	}

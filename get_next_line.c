@@ -6,64 +6,93 @@
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 18:46:41 by mamateo           #+#    #+#             */
-/*   Updated: 2018/12/30 13:46:47 by mamateo          ###   ########.fr       */
+/*   Updated: 2019/01/03 18:33:07 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
-** invokes the file from t_list struct,
-** giving a size and creates a file description placement.
+** get_file reads the fd/len of file
+** len = ft_strlen_fd(s, fd);
 */
 
-static t_list		*get_file(t_list **file, int fd)
+int				get_file(char **s, char **line, int fd, int ret)
 {
-	t_list			*tmp;
+	char		*poop;
+	int			len;
 
-	tmp = *file;
-	while (tmp)
+	len = 0;
+	while (s[fd][len] != '\n' && s[fd][len] != '\0')
+		len++;
+	if (s[fd][len] == '\n')
 	{
-		if ((int)tmp->content_size == fd)
-			return (tmp);
-		tmp = tmp->next;
+		*line = ft_strsub(s[fd], 0, len);
+		poop = ft_strdup(s[fd] + len + 1);
+		free(s[fd]);
+		s[fd] = poop;
+		if (s[fd][0] == '\0')
+			ft_strdel(&s[fd]);
 	}
-	tmp = ft_lstnew("\0", fd);
-	ft_lstadd(file, tmp);
-	tmp = *file;
-	return (tmp);
+	else if (s[fd][len] == '\0')
+	{
+		if (ret == BUFF_SIZE)
+			return (get_next_line(fd, line));
+		*line = ft_strdup(s[fd]);
+		ft_strdel(&s[fd]);
+	}
+	return (1);
 }
 
 /*
 ** heart of the file, depending on the main, invokes **line,
-** checks file for content,
+** fd limits: 4864
 ** and returns a number -1, 0, or 1 for false, null, or true
 */
 
-int					get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	char			buf[BUFF_SIZE + 1];
-	static t_list	*file;
-	int				i;
-	int				ret;
-	t_list			*cur;
+	static char	*s[4864];
+	char		buf[BUFF_SIZE + 1];
+	char		*tmp;
+	int			food;
 
-	if ((fd < 0 || line == NULL || read(fd, buf, 0) < 0))
+	if (fd < 0 || line == NULL)
 		return (-1);
-	cur = get_file(&file, fd);
-	CHECK((*line = ft_strnew(1)));
-	while ((ret = read(fd, buf, BUFF_SIZE)))
+	while ((food = read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		buf[ret] = '\0';
-		CHECK((cur->content = ft_strjoin(cur->content, buf)));
+		buf[food] = '\0';
+		if (s[fd] == NULL)
+			s[fd] = ft_strnew(1);
+		tmp = ft_strjoin(s[fd], buf);
+		free(s[fd]);
+		s[fd] = tmp;
 		if (ft_strchr(buf, '\n'))
 			break ;
 	}
-	if (ret < BUFF_SIZE && !ft_strlen(cur->content))
+	if (food < 0)
+		return (-1);
+	else if (food == 0 && (s[fd] == NULL || s[fd][0] == '\0'))
 		return (0);
-	i = ft_cpytill(line, cur->content, '\n');
-	(i < (int)ft_strlen(cur->content))
-		? cur->content += (i + 1)
-		: ft_strclr(cur->content);
-	return (1);
+	return (get_file(s, line, fd, food));
 }
+/*
+** invokes the file from t_list struct,
+** giving a size and creates a file description placement.
+** static t_list		*get_file(t_list **file, int fd)
+**{
+**	t_list			*tmp;
+**
+**	tmp = *file;
+**	while (tmp)
+**	{
+**		if ((int)tmp->content_size == fd)
+**			return (tmp);
+**		tmp = tmp->next;
+**	}
+**	tmp = ft_lstnew("\0", fd);
+**	ft_lstadd(file, tmp);
+**	tmp = *file;
+**	return (tmp);
+**}
+*/

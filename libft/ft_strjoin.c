@@ -6,7 +6,7 @@
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 21:51:55 by mamateo           #+#    #+#             */
-/*   Updated: 2018/12/10 13:23:26 by mamateo          ###   ########.fr       */
+/*   Updated: 2018/12/31 18:06:21 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char		*ft_strjoin(char const *s1, char const *s2)
 		*dst = '\0';
 		return (dst - (len1 + len2));
 	}
+	free(dst);
 	return (dst);
 }
 

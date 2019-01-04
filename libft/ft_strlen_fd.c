@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlen_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/10 18:47:21 by mamateo           #+#    #+#             */
-/*   Updated: 2019/01/03 16:20:52 by mamateo          ###   ########.fr       */
+/*   Created: 2019/01/03 16:56:38 by mamateo           #+#    #+#             */
+/*   Updated: 2019/01/03 18:32:39 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
+#include "libft.h"
 
-# define BUFF_SIZE 42
+int		ft_strlen_fd(char **str, int fd)
+{
+	int len;
 
-int		get_next_line(const int fd, char **line);
-#endif
+	len = 0;
+	while (str[fd][len] != '\n' && str[fd][len] != '0')
+		len++;
+	return (len);
+}
 
 /*
-** https://www.tutorialspoint.com/cprogramming/c_header_files.htm
+** len = ft_strlen_fd(s, fd);
 */

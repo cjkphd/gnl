@@ -6,7 +6,7 @@
 /*   By: mamateo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:20:25 by mamateo           #+#    #+#             */
-/*   Updated: 2018/12/29 23:16:27 by mamateo          ###   ########.fr       */
+/*   Updated: 2019/01/03 18:31:06 by mamateo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strjoinch(char const *s1, char c);
 size_t				ft_strlcat(char *dst, const char *src, size_t n);
 size_t				ft_strlen(const char *s);
+int					ft_strlen_fd(char **str, int fd);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strncat(char *s1, const char *s2, size_t n);
